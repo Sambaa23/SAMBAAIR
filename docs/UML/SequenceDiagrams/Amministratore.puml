@@ -1,0 +1,51 @@
+@startuml
+actor Amministratore
+participant "GUI Login Admin" as GUI_Log
+participant "GUI Amministratore" as GUI_Amministratore
+participant "Backend" as Backend
+participant "Database" as Database
+
+== Gestione Clienti e Voli ==
+Amministratore -> GUI_Log : tenta di accedere alla gui amministratore
+GUI_Log -> GUI_Amministratore : Credenziali corrette
+GUI_Amministratore -> Backend : Richiede visualizzazione clienti/voli
+Backend -> Database : Recupera clienti/voli
+Database --> Backend : Restituisce clienti/voli
+Backend --> GUI_Amministratore : Mostra clienti/voli
+
+alt Accesso "GUI Amministratore"
+Amministratore --> GUI_Log : tenta di accedere alla gui amministratore
+GUI_Log --> Database : Recupera credenziali
+Database --> GUI_Log : Mostra credenziali
+GUI_Log --> Amministratore : Credenziali errate
+end
+
+alt Aggiungi Cliente
+    GUI_Amministratore -> Backend : Richiede aggiunta cliente
+    Backend -> Database : Inserisce nuovo cliente
+    Database --> Backend : Conferma inserimento cliente
+    Backend --> GUI_Amministratore : Conferma aggiunta cliente
+end
+
+alt Aggiungi Volo
+    GUI_Amministratore -> Backend : Richiede aggiunta volo
+    Backend -> Database : Inserisce nuovo volo
+    Database --> Backend : Conferma inserimento volo
+    Backend --> GUI_Amministratore : Conferma aggiunta volo
+end
+
+alt Aggiungi Prenotazione
+    GUI_Amministratore -> Backend : Richiede aggiunta prenotazione
+    Backend -> Database : Inserisce nuova prenotazione
+    Database --> Backend : Conferma inserimento prenotazione
+    Backend --> GUI_Amministratore : Conferma aggiunta prenotazione
+end
+
+alt Aggiungi Biglietto
+    GUI_Amministratore -> Backend : Richiede aggiunta biglietto
+    Backend -> Database : Inserisce nuovo biglietto
+    Database --> Backend : Conferma inserimento biglietto
+    Backend --> GUI_Amministratore : Conferma aggiunta biglietto
+end
+
+@enduml

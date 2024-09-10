@@ -1,0 +1,152 @@
+@startuml
+package "src - main - java - client" {
+    [NotificheClient]
+}
+
+package "src - main - java - server" {
+    [NotificheServer]
+    [NotificheServiceGrpc]
+    [NotificheServiceImpl]
+    [NotificheService (Interface)]
+}
+
+package "src - main - java - Updatable" {
+    package "conf" {
+        [DatabaseConnection]
+    }
+
+    package "Aereoo" {
+        [Aereo]
+        [AereoFactory (Interface)]
+        [AereoFactoryImpl]
+        [AereoId]
+        [AereoInterazionaleFactory]
+        [AereoNazionaleFactory]
+        [Posto]
+
+        [Aereo] *-- [Posto]
+        [AereoFactoryImpl] ..|> [AereoFactory]
+    }
+
+    package "Ticket" {
+        [Biglietto (Abstract)]
+        [Biglietto Fidelity]
+        [Biglietto]
+        [Biglietto (Interface)]
+
+        [Biglietto] ..|> [Biglietto (Abstract)]
+        [Biglietto Fidelity] ..|> [Biglietto (Abstract)]
+        [Biglietto (Interface)] ..|> [Biglietto (Abstract)]
+    }
+
+    package "Client" {
+        [Cliente (Abstract)]
+        [Cliente Fedeltà]
+        [Cliente]
+        [EstrattoConto]
+        [EstrattoConto (Abstract)]
+
+        [Cliente] ..|> [Cliente (Abstract)]
+        [Cliente Fedeltà] ..|> [Cliente (Abstract)]
+        [EstrattoConto] ..|> [EstrattoConto (Abstract)]
+    }
+
+    package "GUIClient" {
+        [GUIVoliFidelity]
+        [GUIVoliNormale]
+        [LoginGUIClient]
+        [PrenotazioneFidelityGUI]
+        [PrenotazioneNormaleGUI]
+        [RegistrazioneGUIClient]
+    }
+
+    package "GUIServer" {
+        [AdminGUI]
+        [LoginGUI]
+        [TicketManagementDialog]
+    }
+
+    package "Pagam" {
+        [Pagamento]
+        [Pagamento (Abstract)]
+
+        [Pagamento] ..|> [Pagamento (Abstract)]
+    }
+
+    package "Booking" {
+        [Prenotazione (Abstract)]
+        [PrenotazioneFidelity]
+        [Prenotazione]
+        [PrenotazioneID]
+
+        [Prenotazione] ..|> [Prenotazione (Abstract)]
+        [PrenotazioneFidelity] ..|> [Prenotazione (Abstract)]
+
+    }
+
+    package "Promozione" {
+        [Promozione (Abstract)]
+        [PromozionePeriodo]
+        [PromozioneVoli]
+        [PromozionePeriodo] ..|> [Promozione (Abstract)]
+        [PromozioneVoli] ..|> [Promozione (Abstract)]
+    }
+
+    package "Flight" {
+        [Volo (Interface)]
+        [Volo (Abstract)]
+        [Volo]
+        [TipoVoloStrategy (Interface)]
+        [VoliDisponibili]
+        [VoliDisponibili (Abstract)]
+        [VoloIntercontinentaleStrategy]
+        [VoloInternazionaleStrategy]
+        [VoloNazionaleStrategy]
+
+        [Volo] ..|> [Volo (Abstract)]
+        [Volo (Abstract)] ..|> [Volo (Interface)]
+        [VoliDisponibili] ..|> [VoliDisponibili (Abstract)]
+        [VoloIntercontinentaleStrategy] ..|> [TipoVoloStrategy (Interface)]
+        [VoloInternazionaleStrategy] ..|> [TipoVoloStrategy (Interface)]
+        [VoloNazionaleStrategy] ..|> [TipoVoloStrategy (Interface)]
+    }
+
+    [Biglietto] *-- [Cliente]
+    [Biglietto] *-- [Volo]
+    [Biglietto Fidelity] *-- [Cliente Fedeltà]
+    [Biglietto Fidelity] *-- [Volo]
+
+    [Prenotazione] *-- [Biglietto]
+    [Prenotazione Fidelity] *-- [Biglietto Fidelity]
+    [Prenotazione] *-- [Cliente]
+    [Prenotazione Fidelity] *-- [Cliente Fedeltà]
+    [Prenotazione] *-- [Volo]
+    [Prenotazione Fidelity] *-- [Volo]
+
+    [Cliente] *-- [Prenotazione]
+    [Cliente Fedeltà] *-- [PrenotazioneFidelity]
+}
+
+[NotificheClient] ..> [NotificheServiceGrpc] : Uses
+[NotificheServiceImpl] ..> [NotificheServer] : Implements
+[NotificheServiceGrpc] ..> [NotificheServiceImpl] : Uses
+[NotificheServer] ..> [DatabaseConnection] : Connects to
+[NotificheServer] ..> [Prenotazione] : Manages
+[NotificheServer] ..> [Cliente] : Manages
+[NotificheServer] ..> [Biglietto] : Manages
+[NotificheServer] ..> [Volo] : Manages
+[NotificheServer] ..> [ClienteFidelity] : Manages
+[NotificheServer] ..> [PrenotazioneFidelity] : Manages
+[NotificheServer] ..> [Biglietto Fidelity] : Manages
+[NotificheServer] ..> [Promozione] : Manages
+[LoginGUIClient] ..> [DatabaseConnection] : Connects to
+[TicketManagementDialog] ..> [DatabaseConnection] : Connects to
+[AdminGUI] ..> [DatabaseConnection] : Connects to
+[GUIVoliFidelity] ..> [DatabaseConnection] : Connects to
+[GUIVoliNormale] ..> [DatabaseConnection] : Connects to
+[RegistrazioneGUIClient] ..> [DatabaseConnection] : Connects to
+[PrenotazioneFidelityGUI] ..> [DatabaseConnection] : Connects to
+[PrenotazioneNormaleGUI] ..> [DatabaseConnection] : Connects to
+
+
+@enduml

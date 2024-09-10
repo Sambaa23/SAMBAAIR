@@ -1,0 +1,95 @@
+@startuml
+
+package Updatable.Cliente {
+
+    class ClienteAbstract {
+        + email: String
+        + nome: String
+        + cognome: String
+        + indirizzo: String
+        + dataNascita: LocalDate
+        + prenotazioni: LinkedList<Prenotazione>
+        + notificheClient: NotificheClient
+        + getEmail(): String
+        + getNome(): String
+        + getCognome(): String
+        + getIndirizzo(): String
+        + getDataNascita(): LocalDate
+        + getPrenotazioni(): LinkedList<Prenotazione>
+        + setPrenotazioni(prenotazioni: LinkedList<Prenotazione>): void
+        + aggiungiPrenotazione(prenotazione: Prenotazione): void
+        + richiediModificaBiglietto(biglietto: Biglietto, nuovoVolo: Volo): void
+        + acquistaBiglietto(prenotazione: Prenotazione, nomeBeneficiario: String, cognomeBeneficiario: String, prezzo: double, tariffa: String): void
+        + clone(): ClienteAbstract
+    }
+
+    class ClienteFedelta {
+        - email: String
+        - nome: String
+        - cognome: String
+        - indirizzo: String
+        - dataNascita: LocalDate
+        - prenotazioni: LinkedList<PrenotazioneFidelity>
+        - codice: int
+        - puntiAccumulati: int
+        - dataUltimoAcquisto: LocalDate
+        + ClienteFedelta()
+        + ClienteFedelta(email: String, nome: String, cognome: String, indirizzo: String, dataNascita: LocalDate)
+        + getEmail(): String
+        + getNome(): String
+        + getCognome(): String
+        + getIndirizzo(): String
+        + getDataNascita(): LocalDate
+        + getPrenotazioni(): LinkedList<PrenotazioneFidelity>
+        + setPrenotazioni(prenotazioni: LinkedList<PrenotazioneFidelity>): void
+        + getCodice(): int
+        + getPuntiAccumulati(): int
+        + setPuntiAccumulati(puntiAccumulati: int): void
+        + getDataUltimoAcquisto(): LocalDate
+        + setDataUltimoAcquisto(dataUltimoAcquisto: LocalDate): void
+        + aggiungiPrenotazione(prenotazione: PrenotazioneFidelity): void
+        + richiediModificaBiglietto(biglietto: BigliettoFidelity, nuovoVolo: Volo): void
+        + rimuoviPrenotazione(prenotazione: PrenotazioneFidelity): void
+        + acquistaBiglietto(prenotazione: PrenotazioneFidelity, nomeBeneficiario: String, cognomeBeneficiario: String, prezzo: double, tariffa: String): void
+        + generaEstrattoConto(): EstrattoConto
+        + clone(): ClienteFedelta
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    class Cliente {
+        - email: String
+        - nome: String
+        - cognome: String
+        - indirizzo: String
+        - dataNascita: LocalDate
+        - prenotazioni: LinkedList<Prenotazione>
+        + Cliente()
+        + Cliente(email: String, nome: String, cognome: String, indirizzo: String, dataNascita: LocalDate)
+        + getEmail(): String
+        + getNome(): String
+        + getCognome(): String
+        + getIndirizzo(): String
+        + getDataNascita(): LocalDate
+        + getPrenotazioni(): LinkedList<Prenotazione>
+        + setPrenotazioni(prenotazioni: LinkedList<Prenotazione>): void
+        + aggiungiPrenotazione(prenotazione: Prenotazione): void
+        + richiediModificaBiglietto(biglietto: Biglietto, nuovoVolo: Volo): void
+        + acquistaBiglietto(prenotazione: Prenotazione, nomeBeneficiario: String, cognomeBeneficiario: String, prezzo: double, tariffa: String): void
+        + clone(): Cliente
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    ClienteFedelta --|> ClienteAbstract
+    Cliente --|> ClienteAbstract
+    ClienteAbstract ..> Prenotazione
+    ClienteAbstract ..> Biglietto
+    ClienteAbstract ..> Volo
+    ClienteAbstract ..> NotificheClient
+
+}
+
+@enduml

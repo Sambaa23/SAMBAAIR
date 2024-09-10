@@ -1,0 +1,10 @@
+@startuml
+actor Server
+
+Server --> (Invia Notifiche)
+
+(Invia Notifiche) ..> (Invia Notifiche promozione normale) : <<include>>
+(Invia Notifiche) ..> (Invia Notifiche scadenza prenotazioni) : <<include>>
+(Invia Notifiche) ..> (Invia Notifiche scadenza fedeltà) : <<include>>
+(Invia Notifiche promozione normale) ..> (Invia Notifiche promozione fid) : <<extend>>
+@enduml

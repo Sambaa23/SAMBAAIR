@@ -1,0 +1,80 @@
+@startuml
+
+Package Updatable.Volo {
+
+ class Volo {
+        - idVolo: int
+        - partenza: String
+        - destinazione: String
+        - orario: LocalTime
+        - giorno: LocalDate
+        - disponibilita: int
+        - aereo: Aereo
+        + getIdVolo(): int
+        + getPartenza(): String
+        + getDestinazione(): String
+        + getOrario(): LocalTime
+        + getGiorno(): LocalDate
+        + getDisponibilita(): int
+        + orarioVolo(): LocalTime
+        + dataVolo(): LocalDate
+        + dataOraVolo(): LocalDateTime
+        + disponibilitaVolo(): int
+        + getPunti(): int
+        + getAereo(): Aereo
+        + getAirportCoordinates(): Map<String, double[]>
+        + getCoordinate(airportCode: String): double[]
+        + setOrario(orario: LocalTime)
+        + setGiorno(giorno: LocalDate)
+        + setDisponibilita(disponibilita: int)
+        + setAereo(aereo: Aereo)
+        + calcolaDistanza(city1: String, city2: String): double
+        + calcolaPunti(): int
+        + clone(): Volo
+        + equals(Object o): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+ class Aereo {
+        - numeroSeriale: long
+        - modello: String
+        - posti: List<Posto>
+        - tipo: TipoVeicolo
+        + Aereo(numeroSeriale: long, modello: String, p: int, tipo: TipoVeicolo)
+        + Aereo(numeroSeriale: long, modello: String, tipo: TipoVeicolo)
+        + Aereo()
+        + creaListaPosti(p: int): List<Posto>
+        + getPosti(): int
+        + getNameLastPos(): char
+        + getNumeroSeriale(): long
+        + getModello(): String
+        + getP(): List<Posto>
+        + getTipo(): TipoVeicolo
+        + equals(Object o): boolean
+        + hashCode(): int
+        + toString(): String
+        + clone(): Aereo
+    }
+
+ class Posto {
+        - aereo: Aereo
+        - fila: int
+        - posto: Character
+        + Posto(aereo: Aereo, fila: int, posto: Character)
+        + getAereo(): Aereo
+        + getFila(): int
+        + getPosto(): char
+        + equals(Object o): boolean
+        + hashCode(): int
+        + toString(): String
+        + clone(): Posto
+    }
+
+ Aereo "1" *-- "*" Posto : "posti"
+    Volo "1" *-- "1" Aereo : "aereo"
+
+}
+
+@enduml
+

@@ -1,0 +1,206 @@
+@startuml
+
+package Updatable.Prenotazione {
+
+    class Prenotazione {
+        - cliente: Cliente
+        - volo: Volo
+        - biglietti: LinkedList<Biglietto>
+        - dataPrenotazione: LocalDate
+        + aggiungiBiglietto(biglietto: Biglietto)
+        + isScaduta(): boolean
+        + getCliente(): Cliente
+        + getVolo(): Volo
+        + getBiglietti(): LinkedList<Biglietto>
+        + setBiglietti(biglietti: LinkedList<Biglietto>)
+        + getDataPrenotazione(): LocalDate
+        + equals(Object o): boolean
+        + hashCode(): int
+        + toString(): String
+        + clone(): Prenotazione
+    }
+
+    class PrenotazioneFidelity {
+        - cliente: ClienteFedelta
+        - volo: Volo
+        - biglietti: LinkedList<BigliettoFidelity>
+        - dataPrenotazione: LocalDate
+        + aggiungiBiglietto(biglietto: BigliettoFidelity)
+        + isScaduta(): boolean
+        + getCliente(): ClienteFedelta
+        + getVolo(): Volo
+        + getBiglietti(): LinkedList<BigliettoFidelity>
+        + setBiglietti(biglietti: LinkedList<BigliettoFidelity>)
+        + getDataPrenotazione(): LocalDate
+        + equals(Object o): boolean
+        + hashCode(): int
+        + toString(): String
+        + clone(): PrenotazioneFidelity
+    }
+
+    class ClienteAbstract {
+            + email: String
+            + nome: String
+            + cognome: String
+            + indirizzo: String
+            + dataNascita: LocalDate
+            + prenotazioni: LinkedList<Prenotazione>
+            + notificheClient: NotificheClient
+            + getEmail(): String
+            + getNome(): String
+            + getCognome(): String
+            + getIndirizzo(): String
+            + getDataNascita(): LocalDate
+            + getPrenotazioni(): LinkedList<Prenotazione>
+            + setPrenotazioni(prenotazioni: LinkedList<Prenotazione>): void
+            + aggiungiPrenotazione(prenotazione: Prenotazione): void
+            + richiediModificaBiglietto(biglietto: Biglietto, nuovoVolo: Volo): void
+            + acquistaBiglietto(prenotazione: Prenotazione, nomeBeneficiario: String, cognomeBeneficiario: String, prezzo: double, tariffa: String): void
+            + clone(): ClienteAbstract
+        }
+
+    class ClienteFedelta {
+            - email: String
+            - nome: String
+            - cognome: String
+            - indirizzo: String
+            - dataNascita: LocalDate
+            - prenotazioni: LinkedList<PrenotazioneFidelity>
+            - codice: int
+            - puntiAccumulati: int
+            - dataUltimoAcquisto: LocalDate
+            + ClienteFedelta()
+            + ClienteFedelta(email: String, nome: String, cognome: String, indirizzo: String, dataNascita: LocalDate)
+            + getEmail(): String
+            + getNome(): String
+            + getCognome(): String
+            + getIndirizzo(): String
+            + getDataNascita(): LocalDate
+            + getPrenotazioni(): LinkedList<PrenotazioneFidelity>
+            + setPrenotazioni(prenotazioni: LinkedList<PrenotazioneFidelity>): void
+            + getCodice(): int
+            + getPuntiAccumulati(): int
+            + setPuntiAccumulati(puntiAccumulati: int): void
+            + getDataUltimoAcquisto(): LocalDate
+            + setDataUltimoAcquisto(dataUltimoAcquisto: LocalDate): void
+            + aggiungiPrenotazione(prenotazione: PrenotazioneFidelity): void
+            + richiediModificaBiglietto(biglietto: BigliettoFidelity, nuovoVolo: Volo): void
+            + rimuoviPrenotazione(prenotazione: PrenotazioneFidelity): void
+            + acquistaBiglietto(prenotazione: PrenotazioneFidelity, nomeBeneficiario: String, cognomeBeneficiario: String, prezzo: double, tariffa: String): void
+            + generaEstrattoConto(): EstrattoConto
+            + clone(): ClienteFedelta
+            + equals(o: Object): boolean
+            + hashCode(): int
+            + toString(): String
+        }
+
+    class Volo {
+            - idVolo: int
+            - partenza: String
+            - destinazione: String
+            - orario: LocalTime
+            - giorno: LocalDate
+            - disponibilita: int
+            - aereo: Aereo
+            + getIdVolo(): int
+            + getPartenza(): String
+            + getDestinazione(): String
+            + getOrario(): LocalTime
+            + getGiorno(): LocalDate
+            + getDisponibilita(): int
+            + orarioVolo(): LocalTime
+            + dataVolo(): LocalDate
+            + dataOraVolo(): LocalDateTime
+            + disponibilitaVolo(): int
+            + getPunti(): int
+            + getAereo(): Aereo
+            + getAirportCoordinates(): Map<String, double[]>
+            + getCoordinate(airportCode: String): double[]
+            + setOrario(orario: LocalTime)
+            + setGiorno(giorno: LocalDate)
+            + setDisponibilita(disponibilita: int)
+            + setAereo(aereo: Aereo)
+            + calcolaDistanza(city1: String, city2: String): double
+            + calcolaPunti(): int
+            + clone(): Volo
+            + equals(Object o): boolean
+            + hashCode(): int
+            + toString(): String
+        }
+
+
+
+    class Biglietto {
+            - id: int
+            - cliente: Cliente
+            - nomeBeneficiario: String
+            - cognomeBeneficiario: String
+            - volo: Volo
+            - prezzo: double
+            - tariffa: String
+            - pagato: boolean
+            + Biglietto()
+            + Biglietto(cliente: Cliente, nomeBeneficiario: String, cognomeBeneficiario: String, volo: Volo, prezzo: double, tariffa: String)
+            + getId(): int
+            + getCliente(): Cliente
+            + getNomeBeneficiario(): String
+            + getCognomeBeneficiario(): String
+            + getVolo(): Volo
+            + getPrezzo(): double
+            + getOrario(): LocalTime
+            + getData(): LocalDate
+            + getDatetime(): LocalDateTime
+            + getTariffa(): String
+            + setPagato(pagato: boolean): void
+            + calcolaTassaModifica(): double
+            + modificaDataOrario(nuovoVolo: Volo, nome: String, cognome: String): void
+            + clone(): Biglietto
+            + equals(o: Object): boolean
+            + hashCode(): int
+            + toString(): String
+        }
+
+    class BigliettoFidelity {
+            - id: int
+            - cliente: ClienteFedelta
+            - nomeBeneficiario: String
+            - cognomeBeneficiario: String
+            - volo: Volo
+            - prezzo: double
+            - punti: int
+            - tariffa: String
+            - pagato: boolean
+            + BigliettoFidelity()
+            + BigliettoFidelity(cliente: ClienteFedelta, nomeBeneficiario: String, cognomeBeneficiario: String, volo: Volo, prezzo: double, tariffa: String)
+            + getId(): int
+            + getCliente(): ClienteFedelta
+            + getNomeBeneficiario(): String
+            + getCognomeBeneficiario(): String
+            + getVolo(): Volo
+            + getPrezzo(): double
+            + getOrario(): LocalTime
+            + getPunti(): int
+            + getData(): LocalDate
+            + getDatetime(): LocalDateTime
+            + getTariffa(): String
+            + setPunti(punti: int): void
+            + setPagato(pagato: boolean): void
+            + calcolaTassaModifica(): double
+            + modificaDataOrario(nuovoVolo: Volo): void
+            + clone(): BigliettoFidelity
+            + equals(o: Object): boolean
+            + hashCode(): int
+            + toString(): String
+        }
+
+    Prenotazione "1" *-- "1" Cliente : "cliente"
+    Prenotazione "1" *-- "1" Volo : "volo"
+    Prenotazione "1" *-- "*" Biglietto : "biglietti"
+
+    PrenotazioneFidelity "1" *-- "1" ClienteFedelta : "cliente"
+    PrenotazioneFidelity "1" *-- "1" Volo : "volo"
+    PrenotazioneFidelity "1" *-- "*" BigliettoFidelity : "biglietti"
+
+}
+
+@enduml

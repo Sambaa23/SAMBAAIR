@@ -1,0 +1,104 @@
+@startuml
+
+package Updatable.Biglietto {
+
+    class BigliettoAbstract {
+        + id: int
+        + cliente: Cliente
+        + nomeBeneficiario: String
+        + cognomeBeneficiario: String
+        + volo: Volo
+        + prezzo: double
+        + tariffa: String
+        + pagato: boolean
+        + getId(): int
+        + getCliente(): Cliente
+        + getNomeBeneficiario(): String
+        + getCognomeBeneficiario(): String
+        + getVolo(): Volo
+        + getPrezzo(): double
+        + getOrario(): LocalTime
+        + getData(): LocalDate
+        + getDatetime(): LocalDateTime
+        + getTariffa(): String
+        + setPagato(pagato: boolean): void
+        + calcolaTassaModifica(): double
+        + modificaDataOrario(nuovoVolo: Volo, nome: String, cognome: String): void
+        + clone(): BigliettoAbstract
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    class Biglietto {
+        - id: int
+        - cliente: Cliente
+        - nomeBeneficiario: String
+        - cognomeBeneficiario: String
+        - volo: Volo
+        - prezzo: double
+        - tariffa: String
+        - pagato: boolean
+        + Biglietto()
+        + Biglietto(cliente: Cliente, nomeBeneficiario: String, cognomeBeneficiario: String, volo: Volo, prezzo: double, tariffa: String)
+        + getId(): int
+        + getCliente(): Cliente
+        + getNomeBeneficiario(): String
+        + getCognomeBeneficiario(): String
+        + getVolo(): Volo
+        + getPrezzo(): double
+        + getOrario(): LocalTime
+        + getData(): LocalDate
+        + getDatetime(): LocalDateTime
+        + getTariffa(): String
+        + setPagato(pagato: boolean): void
+        + calcolaTassaModifica(): double
+        + modificaDataOrario(nuovoVolo: Volo, nome: String, cognome: String): void
+        + clone(): Biglietto
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    class BigliettoFidelity {
+        - id: int
+        - cliente: ClienteFedelta
+        - nomeBeneficiario: String
+        - cognomeBeneficiario: String
+        - volo: Volo
+        - prezzo: double
+        - punti: int
+        - tariffa: String
+        - pagato: boolean
+        + BigliettoFidelity()
+        + BigliettoFidelity(cliente: ClienteFedelta, nomeBeneficiario: String, cognomeBeneficiario: String, volo: Volo, prezzo: double, tariffa: String)
+        + getId(): int
+        + getCliente(): ClienteFedelta
+        + getNomeBeneficiario(): String
+        + getCognomeBeneficiario(): String
+        + getVolo(): Volo
+        + getPrezzo(): double
+        + getOrario(): LocalTime
+        + getPunti(): int
+        + getData(): LocalDate
+        + getDatetime(): LocalDateTime
+        + getTariffa(): String
+        + setPunti(punti: int): void
+        + setPagato(pagato: boolean): void
+        + calcolaTassaModifica(): double
+        + modificaDataOrario(nuovoVolo: Volo): void
+        + clone(): BigliettoFidelity
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    Biglietto --|> BigliettoAbstract
+    BigliettoFidelity --|> BigliettoAbstract
+    BigliettoAbstract ..> Cliente
+    BigliettoAbstract ..> Volo
+    BigliettoAbstract ..> ClienteFedelta
+
+}
+
+@enduml

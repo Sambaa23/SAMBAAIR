@@ -1,0 +1,18 @@
+@startuml
+actor ClienteFedeltà
+
+ClienteFedeltà --> (Accedere alla GUIFidelity)
+ClienteFedeltà --> (Ricevere notifiche)
+ClienteFedeltà --> (Visualizzare notifiche)
+
+(Accedere alla GUIFidelity) .> (Registrarsi sul DB come clFid) : <<extend>>
+(Accedere alla GUIFidelity) .> (Prenotare un volo con vantaggi) : <<include>>
+(Accedere alla GUIFidelity) .> (Ricevere un biglietto omaggio per una meta Europea) : <<include>>
+(Ricevere notifiche) .> (Ricevere notifiche promozioni speciali) : <<include>>
+(Ricevere notifiche) .> (Ricevere notifiche scadenza prenotazione voli) : <<include>>
+(Ricevere notifiche) .> (Ricevere notifiche scadenza fedeltà) : <<include>>
+(Prenotare un volo con vantaggi) .> (Acquistare uno o più biglietti fid) : <<include>>
+(Prenotare un volo con vantaggi) .> (Visualizzare l'estratto conto dei punti fedeltà) : <<include>>
+(Acquistare uno o più biglietti fid) .> (Modificare un biglietto) : <<extend>>
+
+@enduml

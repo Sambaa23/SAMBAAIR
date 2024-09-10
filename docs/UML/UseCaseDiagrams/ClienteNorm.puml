@@ -1,0 +1,16 @@
+@startuml
+actor Cliente
+
+Cliente --> (Accedere alla GUINormale)
+Cliente --> (Ricevere notifiche)
+Cliente --> (Visualizzare notifiche)
+
+
+(Accedere alla GUINormale) .> (Registrarsi sul DB) : <<extend>>
+(Accedere alla GUINormale) .> (Prenotare un volo) : <<include>>
+(Ricevere notifiche) .> (Ricevere notifiche promozioni standard) : <<include>>
+(Ricevere notifiche) .> (Ricevere notifiche scadenza prenotazione voli) : <<include>>
+(Prenotare un volo) .> (Acquistare uno o più biglietti) : <<include>>
+(Acquistare uno o più biglietti) .> (Modificare un biglietto) : <<extend>>
+
+@enduml

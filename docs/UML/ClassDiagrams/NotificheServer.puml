@@ -1,0 +1,112 @@
+@startuml
+
+package server {
+
+    class NotificheServer {
+        - port: int
+        - ultimoAcquistoCliente: Map<String, LocalDate>
+        - prenotazioniCliente: Map<String, LocalDateTime>
+        - observerAddresses: Map<String, String>
+        - executorService: ExecutorService
+        - scheduler: ScheduledExecutorService
+        - clientiRegistrati: Set<String>
+        - notificheAvviate: boolean
+        - notifichePerCliente: ConcurrentMap<String, ConcurrentLinkedQueue<String>>
+        + NotificheServer(port: int)
+        + start(): void
+        + registraCliente(email: String, fedelta: boolean): void
+        - startScheduledTasks(fedelta: boolean): void
+        - controllaEInviaNotifiche(): void
+        - controllaInattivitaClienti(): void
+        + inviaPromozioniFedelta(): void
+        + inviaPromozioniATuttiClienti(): void
+        + inviaNotifica(email: String, messaggio: String): void
+        + getNotifiche(email: String): ConcurrentLinkedQueue<String>
+        - stop(): void
+        - blockUntilShutdown(server: Server): void
+        - notifyObservers(clientmail: String, message: String): void
+    }
+
+    class DatabaseConnection {
+        + getConnection(): Connection
+    }
+
+    class ManagedChannel
+    class ManagedChannelBuilder
+    class ObserverServiceGrpc {
+        class ObserverServiceStub {
+            + receiveNotification(notification: Notification, responseObserver: StreamObserver<Empty>): void
+        }
+    }
+
+    class Notification {
+        + newBuilder(): NotificationBuilder
+    }
+
+    class NotificationBuilder {
+        + setClientId(clientId: String): NotificationBuilder
+        + setMessage(message: String): NotificationBuilder
+        + build(): Notification
+    }
+
+    class RegisterObserverRequest {
+        + getClientId(): String
+        + getObserverAddress(): String
+    }
+
+    class RegisterObserverResponse {
+        + getStatus(): String
+    }
+
+    class NotificaPromozioneRequest {
+        + getClientId(): String
+        + getMessage(): String
+    }
+
+    class NotificaPromozioneResponse {
+        + getStatus(): String
+    }
+
+    class NotificaInattivitaRequest {
+        + getClientId(): String
+        + getMessage(): String
+    }
+
+    class NotificaInattivitaResponse {
+        + getStatus(): String
+    }
+
+    class NotificaScadenzaRequest {
+        + getClientId(): String
+        + getScadenza(): String
+    }
+
+    class NotificaScadenzaResponse {
+        + getStatus(): String
+    }
+
+    interface StreamObserver<T> {
+        + onNext(value: T): void
+        + onError(t: Throwable): void
+        + onCompleted(): void
+    }
+
+    class Server
+    class ServerBuilder {
+        + forPort(port: int): ServerBuilder
+        + addService(service: NotificheServer.NotificheServiceImpl): ServerBuilder
+        + build(): Server
+    }
+
+    ManagedChannel --> ObserverServiceGrpc.ObserverServiceStub
+    NotificationBuilder --> Notification
+    NotificheServer *-- NotificheServiceImpl
+    NotificheServer ..> DatabaseConnection : uses
+    NotificheServer ..> Server : starts
+    NotificheServer ..> ManagedChannel : communicates with
+    NotificheServer ..> ObserverServiceGrpc.ObserverServiceStub : communicates with
+
+}
+
+@enduml
+

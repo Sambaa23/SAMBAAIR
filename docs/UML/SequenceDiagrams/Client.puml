@@ -1,0 +1,41 @@
+@startuml
+actor Cliente
+participant "Login GUIClient" as GUI_ClLog
+participant "GUI Voli" as GUI_Cliente
+participant "Registration GUIClient" as GUI_ClReg
+participant "Database" as Database
+participant "Backend" as Backend
+
+participant "NotificheServer" as NotificheServer
+
+== Registrazione e Prenotazione ==
+Cliente -> GUI_ClLog : Tenta accesso alla GUI
+GUI_ClLog -> Database : Verifica se il cliente è registrato
+Database -> GUI_ClLog : Restituisce cliente (se esiste)
+GUI_ClLog -> GUI_Cliente : Si apre la GUI
+
+alt Cliente non registrato
+    GUI_ClLog -> GUI_ClReg : Richiede registrazione
+    GUI_ClReg -> Database : Inserisce nuovo cliente
+    Database -> GUI_ClLog : Conferma registrazione
+    GUI_ClLog -> GUI_Cliente : Si apre la GUI
+end
+
+GUI_Cliente -> Backend : Prenota volo
+Backend -> Database : Verifica disponibilità volo
+Database --> Backend : Restituisce disponibilità volo
+
+alt Volo disponibile
+    Backend -> Database : Inserisce prenotazione
+    Database --> Backend : Conferma prenotazione
+    Backend --> GUI_Cliente : Conferma prenotazione
+else Volo non disponibile
+    Backend --> GUI_Cliente : Notifica disponibilità insufficiente
+end
+
+== Notifiche ==
+NotificheServer --> Cliente : Notifica promozione
+NotificheServer -> GUI_Cliente  : Notifica scadenza prenotazione (se cl fedeltà))
+NotificheServer --> Cliente : Notifica scadenza prenotazione
+
+@enduml

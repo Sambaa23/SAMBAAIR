@@ -1,0 +1,56 @@
+@startuml
+actor Admin
+
+Admin --> (Inserire cliente)
+Admin --> (Eliminare cliente)
+Admin --> (Visualizzare clienti)
+Admin --> (Inserire volo)
+Admin --> (Eliminare volo)
+Admin --> (Visualizzare volo)
+Admin --> (Inserire prenotazione)
+Admin --> (Eliminare prenotazione)
+Admin --> (Visualizzare prenotazioni)
+Admin --> (Inserire promozione normale)
+Admin --> (Aggiornare promozione normale)
+Admin --> (Eliminare promozione normale)
+Admin --> (Visualizzare promozioni normali)
+
+(Inserire cliente) .> (Inserire cliente fedeltà) : <<extend>>
+(Inserire cliente) .> (Aggiornare cliente) : <<extend>>
+(Eliminare cliente) .> (Eliminare cliente fedeltà) : <<extend>>
+(Aggiornare cliente) .> (Aggiornare cliente fedeltà) : <<extend>>
+(Visualizzare clienti) .> (Visualizzare clienti fedeltà) : <<extend>>
+(Inserire volo) .> (Aggiornare Volo) : <<extend>>
+(Inserire prenotazione) .> (Inserire biglietto) : <<include>>
+(Inserire prenotazione) .> (Aggiornare biglietto) : <<include>>
+(Inserire prenotazione) .> (Eliminare biglietto) : <<include>>
+(Inserire prenotazione) .> (Visualizzare biglietti) : <<include>>
+(Inserire prenotazione fid) .> (Inserire biglietto fid) : <<include>>
+(Inserire prenotazione fid) .> (Aggiornare biglietto fid) : <<include>>
+(Inserire prenotazione fid) .> (Eliminare biglietto fid) : <<include>>
+(Inserire prenotazione fid) .> (Visualizzare biglietti fid) : <<include>>
+(Eliminare prenotazione) .> (Eliminare biglietti) : <<include>>
+(Inserire prenotazione) .> (Inserire prenotazione fid) : <<extend>>
+(Inserire prenotazione) .> (Aggiornare prenotazione) : <<extend>>
+(Eliminare prenotazione) .> (Eliminare prenotazione fid) : <<extend>>
+(Aggiornare prenotazione) .> (Aggiornare prenotazione fid) : <<extend>>
+(Visualizzare prenotazioni) .> (Visualizzare prenotazioni fid) : <<extend>>
+(Inserire biglietto) .> (Inserire biglietto fid) : <<extend>>
+(Inserire biglietto) .> (Aggiornare biglietto) : <<extend>>
+(Aggiornare biglietto) .> (Aggiornare biglietto fid) : <<extend>>
+(Eliminare biglietto) .> (Eliminare biglietto fid) : <<extend>>
+(Visualizzare biglietti) .> (Visualizzare biglietti fid) : <<extend>>
+(Inserire promozione normale) .> (Inserire promozione fid) : <<extend>>
+(Inserire promozione normale) .> (Inserire promozione normale voli) : <<extend>>
+(Inserire promozione fid) .> (Inserire promozione fid voli) : <<extend>>
+(Aggiornare promozione normale) .> (Aggiornare promozione fid) : <<extend>>
+(Aggiornare promozione normale) .> (Aggiornare promozione normale voli) : <<extend>>
+(Aggiornare promozione fid) .> (Aggiornare promozione fid voli) : <<extend>>
+(Eliminare promozione normale) .> (Eliminare promozione fid) : <<extend>>
+(Eliminare promozione normale) .> (Eliminare promozione normale voli) : <<extend>>
+(Eliminare promozione fid) .> (Eliminare promozione fid voli) : <<extend>>
+(Visualizzare promozioni normali) .> (Visualizzare promozioni fid) : <<extend>>
+(Visualizzare promozioni normali) .> (Visualizzare promozioni normali voli) : <<extend>>
+(Visualizzare promozioni fid) .> (Visualizzare promozioni fid voli) : <<extend>>
+
+@enduml

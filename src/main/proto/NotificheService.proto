@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "main.proto";
+
+import "google/protobuf/empty.proto";
+
+service NotificheService {
+  rpc registerObserver(RegisterObserverRequest) returns (RegisterObserverResponse);
+  rpc riceviNotificaPromozione(NotificaPromozioneRequest) returns (NotificaPromozioneResponse);
+  rpc notificaInattivitaCliente(NotificaInattivitaRequest) returns (NotificaInattivitaResponse);
+  rpc notificaScadenzaPrenotazione(NotificaScadenzaRequest) returns (NotificaScadenzaResponse);
+}
+
+service ObserverService {
+  rpc receiveNotification(Notification) returns (google.protobuf.Empty);
+}
+
+
+message RegisterObserverRequest {
+  string clientId = 1;
+  string observerAddress = 2;
+}
+
+message RegisterObserverResponse {
+  string status = 1;
+}
+
+message NotificaPromozioneRequest {
+  string clientId = 1;
+  string message = 2;
+}
+
+message NotificaPromozioneResponse {
+  string status = 1;
+}
+
+message NotificaInattivitaRequest {
+  string clientId = 1;
+  string message = 2;
+}
+
+message NotificaInattivitaResponse {
+  string status = 1;
+}
+
+message NotificaScadenzaRequest {
+  string clientId = 1;
+  string scadenza = 2;
+}
+
+message NotificaScadenzaResponse {
+  string status = 1;
+}
+
+message Notification {
+  string clientId = 1;
+  string message = 2;
+}
+
+
+
+
